@@ -135,7 +135,7 @@ function _setup_dovecot_quota() {
 
     # enable quota policy check in postfix
     sedfile -i -E \
-      "s|(reject_unknown_recipient_domain)|\1, check_policy_service inet:localhost:65265|g" \
+      "s|(reject_unknown_recipient_domain)|\1, check_policy_service inet:[::1]:65265|g" \
       /etc/postfix/main.cf
   fi
 }

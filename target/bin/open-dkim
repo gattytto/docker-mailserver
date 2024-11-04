@@ -173,6 +173,6 @@ done < <(_get_valid_lines_from_file "${DATABASE_VHOST}")
 # create TrustedHosts if missing
 if [[ -d /tmp/docker-mailserver/opendkim ]] && [[ ! -f /tmp/docker-mailserver/opendkim/TrustedHosts ]]; then
   _log 'debug' 'Creating DKIM TrustedHosts'
-  echo "127.0.0.1" >/tmp/docker-mailserver/opendkim/TrustedHosts
+  echo "::1" >/tmp/docker-mailserver/opendkim/TrustedHosts
   echo "localhost" >>/tmp/docker-mailserver/opendkim/TrustedHosts
 fi

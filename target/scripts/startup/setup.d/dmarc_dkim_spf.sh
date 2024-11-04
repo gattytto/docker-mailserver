@@ -14,7 +14,7 @@ function _setup_opendkim() {
     touch /etc/opendkim/{SigningTable,TrustedHosts,KeyTable}
 
     _log 'trace' "Adding OpenDKIM to Postfix's milters"
-    postconf 'dkim_milter = inet:localhost:8891'
+    postconf 'dkim_milter = inet:[::1]:8891'
     # shellcheck disable=SC2016
     _add_to_or_update_postfix_main 'smtpd_milters' '$dkim_milter'
     # shellcheck disable=SC2016
@@ -60,7 +60,7 @@ function _setup_opendmarc() {
     _log 'debug' 'Configuring OpenDMARC'
 
     _log 'trace' "Adding OpenDMARC to Postfix's milters"
-    postconf 'dmarc_milter = inet:localhost:8893'
+    postconf 'dmarc_milter = inet:[::1]:8893'
     # Make sure to append the OpenDMARC milter _after_ the OpenDKIM milter!
     # shellcheck disable=SC2016
     _add_to_or_update_postfix_main 'smtpd_milters' '$dmarc_milter'

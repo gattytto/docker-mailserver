@@ -13,9 +13,8 @@ function _setup_docker_permit() {
   unset CONTAINER_NETWORKS
   declare -a CONTAINER_NETWORKS
 
-  CONTAINER_IP=$(ip addr show "${NETWORK_INTERFACE}" | \
-    grep 'inet ' | sed 's|[^0-9\.\/]*||g' | cut -d '/' -f 1)
-  CONTAINER_NETWORK=$(echo "${CONTAINER_IP}" | cut -d '.' -f1-2).0.0
+  CONTAINER_IP=$(ip -6 -o addr show dev eth0| awk "{split(\$4,a,\"/\");print a[1]}" |head -n 1)
+  CONTAINER_NETWORK=$(echo =$(ip -6 -o addr show dev eth0| awk "{split(\$4,a,\"/\");print a[1]}" |head -n 1)::/112)
 
   if [[ -z ${CONTAINER_IP} ]]; then
     _log 'error' 'Detecting the container IP address failed'
@@ -24,7 +23,7 @@ function _setup_docker_permit() {
 
   while read -r IP; do
     CONTAINER_NETWORKS+=("${IP}")
-  done < <(ip -o -4 addr show type veth | grep -E -o '[0-9\.]+/[0-9]+')
+  done < <(ip -6 -o addr show dev eth0| awk "{split(\$4,a,\"/\");print a[1]}" |head -n 1)
 
   function __clear_postfix_mynetworks() {
     _log 'trace' "Clearing Postfix's 'mynetworks'"
