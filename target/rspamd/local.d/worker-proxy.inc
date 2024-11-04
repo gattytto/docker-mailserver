@@ -1,7 +1,7 @@
 # documentation: https://rspamd.com/doc/workers/rspamd_proxy.html
 # see also: https://rspamd.com/doc/quickstart.html#using-of-milter-protocol-for-rspamd--16
 
-bind_socket = "127.0.0.1:11332";
+bind_socket = "[::1]:11332";
 
 milter = yes;
 timeout = 120s;

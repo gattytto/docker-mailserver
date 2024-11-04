@@ -124,7 +124,7 @@ function __rspamd__setup_redis() {
     cat >"${RSPAMD_LOCAL_D}/redis.conf" << "EOF"
 # documentation: https://rspamd.com/doc/configuration/redis.html
 
-servers = "127.0.0.1:6379";
+servers = "[::1]:6379";
 expand_keys = true;
 
 EOF
@@ -142,7 +142,7 @@ EOF
     # NOTE: `/var/lib/redis/` is symlinked to `/var/mail-state/redis/` when DMS is started
     # with a volume mounted to `/var/mail-state/` for data persistence.
     sedfile -i -E                              \
-      -e 's|^(bind).*|\1 127.0.0.1|g'          \
+      -e 's|^(bind).*|\1 [::1]|g'          \
       -e 's|^(daemonize).*|\1 no|g'            \
       -e 's|^(port).*|\1 6379|g'               \
       -e 's|^(loglevel).*|\1 warning|g'        \
@@ -160,7 +160,7 @@ EOF
 function __rspamd__setup_postfix() {
   __rspamd__log 'debug' "Adjusting Postfix's configuration"
 
-  postconf 'rspamd_milter = inet:localhost:11332'
+  postconf 'rspamd_milter = inet:[::1]:11332'
   # shellcheck disable=SC2016
   _add_to_or_update_postfix_main 'smtpd_milters' '$rspamd_milter'
 }
@@ -242,12 +242,12 @@ EOF
 
     cat >"${SIEVE_PIPE_BIN_DIR}/learn-spam.sieve" << EOF
 require ["vnd.dovecot.pipe", "copy", "imapsieve"];
-pipe :copy "rspamc" ["-h", "127.0.0.1:11334", "learn_spam"];
+pipe :copy "rspamc" ["-h", "[::1]:11334", "learn_spam"];
 EOF
 
     cat >"${SIEVE_PIPE_BIN_DIR}/learn-ham.sieve" << EOF
 require ["vnd.dovecot.pipe", "copy", "imapsieve"];
-pipe :copy "rspamc" ["-h", "127.0.0.1:11334", "learn_ham"];
+pipe :copy "rspamc" ["-h", "[::1]:11334", "learn_ham"];
 EOF
 
     sievec "${SIEVE_PIPE_BIN_DIR}/learn-spam.sieve"

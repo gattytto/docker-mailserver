@@ -232,4 +232,13 @@ function _create_opendkim_configs() {
   fi
 }
 
+<<<<<<< HEAD
 _main "${@}"
+=======
+# create TrustedHosts if missing
+if [[ -d /tmp/docker-mailserver/opendkim ]] && [[ ! -f /tmp/docker-mailserver/opendkim/TrustedHosts ]]; then
+  _log 'debug' 'Creating DKIM TrustedHosts'
+  echo "::1" >/tmp/docker-mailserver/opendkim/TrustedHosts
+  echo "localhost" >>/tmp/docker-mailserver/opendkim/TrustedHosts
+fi
+>>>>>>> 4935de9a (ipv6)

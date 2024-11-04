@@ -5,6 +5,8 @@ use strict;
 # Bounce spam, the default option for buster is D_PASS to deliver
 $final_spam_destiny       = D_BOUNCE;
 $final_bad_header_destiny = D_BOUNCE;
+$notify_method  = 'smtp:[::1]:10025';
+$forward_method = 'smtp:[::1]:10025';
 
 # Higher log level to get expected messages at startup
 $log_level = 2;

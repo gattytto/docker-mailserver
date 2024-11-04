@@ -27,11 +27,11 @@ function __setup__security__postgrey() {
     _log 'debug' 'Enabling and configuring Postgrey'
 
     sedfile -i -E \
-      's|(^smtpd_recipient_restrictions =.*)|\1, check_policy_service inet:127.0.0.1:10023|' \
+      's|(^smtpd_recipient_restrictions =.*)|\1, check_policy_service inet:[::1]:10023|' \
       /etc/postfix/main.cf
 
     sed -i -e \
-      "s|\"--inet=127.0.0.1:10023\"|\"--inet=127.0.0.1:10023 --delay=${POSTGREY_DELAY} --max-age=${POSTGREY_MAX_AGE} --auto-whitelist-clients=${POSTGREY_AUTO_WHITELIST_CLIENTS}\"|" \
+      "s|\"--inet=[::1]:10023\"|\"--inet=[::1]:10023 --delay=${POSTGREY_DELAY} --max-age=${POSTGREY_MAX_AGE} --auto-whitelist-clients=${POSTGREY_AUTO_WHITELIST_CLIENTS}\"|" \
       /etc/default/postgrey
 
     if ! grep -i 'POSTGREY_TEXT' /etc/default/postgrey; then
@@ -223,7 +223,7 @@ function __setup__security__amavis() {
       /etc/amavis/conf.d/49-docker-mailserver
 
     cat /etc/dms/postfix/master.d/postfix-amavis.cf >>/etc/postfix/master.cf
-    postconf 'content_filter = smtp-amavis:[127.0.0.1]:10024'
+    postconf 'content_filter = smtp-amavis:[::1]:10024'
 
     sed -i \
       "s|^#\$myhostname = \"mail.example.com\";|\$myhostname = \"${HOSTNAME}\";|" \
