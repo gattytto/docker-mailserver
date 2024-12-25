@@ -17,7 +17,7 @@ alias_database = hash:/etc/aliases
 # https://github.com/docker-mailserver/docker-mailserver/pull/3264#issuecomment-1518993555
 mydestination = $myhostname, localhost.$mydomain, localhost
 relayhost =
-mynetworks = [::1]/128 [fe80::]/64
+mynetworks = [::1]/128 [fe80::]/64 $MY_NETWORKS
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
