@@ -202,7 +202,7 @@ Please read [the SSL page in the documentation][docs-tls] for more information.
 Configures the handling of creating mails with forged sender addresses.
 
 - **0** => (not recommended) Mail address spoofing allowed. Any logged in user may create email messages with a [forged sender address](https://en.wikipedia.org/wiki/Email_spoofing).
-- 1 => Mail spoofing denied. Each user may only send with his own or his alias addresses. Addresses with [extension delimiters](http://www.postfix.org/postconf.5.html#recipient_delimiter) are not able to send messages.
+- 1 => Mail spoofing denied. Each user may only send with their own or their alias addresses. Addresses with [extension delimiters](http://www.postfix.org/postconf.5.html#recipient_delimiter) are not able to send messages.
 
 ##### ENABLE_SRS
 
@@ -295,7 +295,7 @@ Customize the update check interval. Number + Suffix. Suffix must be 's' for sec
 - sdbox => (experimental) uses Dovecot high-performance mailbox format, one file contains one message
 - mdbox ==> (experimental) uses Dovecot high-performance mailbox format, multiple messages per file and multiple files per box
 
-This option has been added in November 2019. Using other format than Maildir is considered as experimental in docker-mailserver and should only be used for testing purpose. For more details, please refer to [Dovecot Documentation](https://wiki2.dovecot.org/MailboxFormat).
+This option has been added in November 2019. Using other format than Maildir is considered as experimental in docker-mailserver and should only be used for testing purpose. For more details, please refer to [Dovecot Documentation](https://doc.dovecot.org/admin_manual/mailbox_formats/#mailbox-formats).
 
 ##### POSTFIX_REJECT_UNKNOWN_CLIENT_HOSTNAME
 
